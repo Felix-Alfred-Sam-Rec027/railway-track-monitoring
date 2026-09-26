@@ -20,7 +20,6 @@
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 240px;
             background: #111827;
@@ -58,14 +57,12 @@
             color: #38bdf8;
         }
 
-        /* MAIN */
         .main {
             margin-left: 240px;
             width: calc(100% - 240px);
             padding: 25px 30px;
         }
 
-        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -92,7 +89,6 @@
             font-size: 14px;
         }
 
-        /* CARDS */
         .cards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -131,7 +127,6 @@
             margin-top: 8px;
         }
 
-        /* GRID */
         .grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr;
@@ -152,7 +147,6 @@
             color: #ffffff;
         }
 
-        /* MAP */
         .map {
             height: 300px;
             background:
@@ -214,7 +208,6 @@
             font-size: 13px;
         }
 
-        /* ALERTS */
         .alert {
             padding: 14px;
             border-radius: 8px;
@@ -241,7 +234,6 @@
             font-size: 13px;
         }
 
-        /* GRAPH */
         .graph {
             height: 220px;
             position: relative;
@@ -252,12 +244,6 @@
             border: 1px solid #263244;
             border-radius: 8px;
             overflow: hidden;
-        }
-
-        .wave {
-            position: absolute;
-            width: 100%;
-            height: 100%;
         }
 
         svg {
@@ -277,7 +263,6 @@
             stroke-width: 2;
         }
 
-        /* TABLE */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -303,7 +288,6 @@
             color: #4ade80;
         }
 
-        /* CONDITION */
         .condition {
             display: flex;
             align-items: center;
@@ -331,7 +315,6 @@
             color: #94a3b8;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 1000px) {
             .cards {
                 grid-template-columns: repeat(2, 1fr);
@@ -358,10 +341,6 @@
             .menu-item {
                 font-size: 0;
                 text-align: center;
-            }
-
-            .menu-item::first-letter {
-                font-size: 20px;
             }
 
             .main {
@@ -463,13 +442,12 @@
                 <div class="map">
 
                     <div class="track"></div>
-
                     <div class="pin"></div>
 
                     <div class="map-info">
                         <b id="trackId">TRACK-02</b><br>
-Kilometer: <span id="trackKm">125.4</span> KM<br>
-Rover: <span id="roverStatus">Active</span>
+                        Kilometer: <span id="trackKm">125.4</span> KM<br>
+                        Rover: <span id="roverStatus">Active</span>
                     </div>
 
                 </div>
@@ -517,57 +495,16 @@ Rover: <span id="roverStatus">Active</span>
                     <polyline
                         class="signal"
                         points="
-                        0,110
-                        20,105
-                        40,120
-                        60,95
-                        80,130
-                        100,90
-                        120,115
-                        140,100
-                        160,125
-                        180,85
-                        200,120
-                        220,105
-                        240,135
-                        260,95
-                        280,115
-                        300,80
-                        320,130
-                        340,100
-                        360,120
-                        380,90
-                        400,125
-                        420,105
-                        440,140
-                        460,85
-                        480,115
-                        500,100
-                        520,130
-                        540,90
-                        560,120
-                        580,105
-                        600,135
-                        620,90
-                        640,115
-                        660,100
-                        680,130
-                        700,85
-                        720,120
-                        740,100
-                        760,135
-                        780,90
-                        800,115
-                        820,100
-                        840,130
-                        860,95
-                        880,120
-                        900,100
-                        920,125
-                        940,90
-                        960,115
-                        980,105
-                        1000,110
+                        0,110 20,105 40,120 60,95 80,130
+                        100,90 120,115 140,100 160,125 180,85
+                        200,120 220,105 240,135 260,95 280,115
+                        300,80 320,130 340,100 360,120 380,90
+                        400,125 420,105 440,140 460,85 480,115
+                        500,100 520,130 540,90 560,120 580,105
+                        600,135 620,90 640,115 660,100 680,130
+                        700,85 720,120 740,100 760,135 780,90
+                        800,115 820,100 840,130 860,95 880,120
+                        900,100 920,125 940,90 960,115 980,105 1000,110
                         "
                     />
 
@@ -589,27 +526,10 @@ Rover: <span id="roverStatus">Active</span>
                     <polyline
                         class="fft"
                         points="
-                        0,210
-                        50,205
-                        100,200
-                        150,190
-                        200,205
-                        250,180
-                        300,200
-                        350,160
-                        400,190
-                        450,130
-                        500,185
-                        550,100
-                        600,175
-                        650,145
-                        700,190
-                        750,165
-                        800,200
-                        850,180
-                        900,205
-                        950,195
-                        1000,210
+                        0,210 50,205 100,200 150,190 200,205
+                        250,180 300,200 350,160 400,190 450,130
+                        500,185 550,100 600,175 650,145 700,190
+                        750,165 800,200 850,180 900,205 950,195 1000,210
                         "
                     />
 
@@ -706,7 +626,7 @@ Rover: <span id="roverStatus">Active</span>
     <script>
 
         /* ============================================
-           PERMANENT RENDER BACKEND
+           RENDER BACKEND
            ============================================ */
 
         const BACKEND_URL =
@@ -714,7 +634,7 @@ Rover: <span id="roverStatus">Active</span>
 
 
         /* ============================================
-           LOAD SENSOR DATA
+           SENSOR DATA
            ============================================ */
 
         async function loadSensors() {
@@ -725,14 +645,11 @@ Rover: <span id="roverStatus">Active</span>
                     await fetch(BACKEND_URL + "/sensors");
 
                 if (!response.ok) {
-                    throw new Error("Backend response error");
+                    throw new Error("Sensor API error");
                 }
 
                 const data =
                     await response.json();
-
-
-                /* SENSOR CARDS */
 
                 document.getElementById("vibrationValue").textContent =
                     data.vibration;
@@ -745,9 +662,6 @@ Rover: <span id="roverStatus">Active</span>
 
                 document.getElementById("batteryValue").textContent =
                     data.battery;
-
-
-                /* SENSOR TABLE */
 
                 document.getElementById("tableVibration").textContent =
                     data.vibration;
@@ -764,7 +678,6 @@ Rover: <span id="roverStatus">Active</span>
                 document.getElementById("tableUltrasonic").textContent =
                     data.ultrasonic;
 
-
             } catch (error) {
 
                 console.error(
@@ -777,30 +690,125 @@ Rover: <span id="roverStatus">Active</span>
         }
 
 
-        /* LOAD IMMEDIATELY */
-async function loadTrack() {
-    try {
-        const response = await fetch(BACKEND_URL + "/track");
-        const data = await response.json();
+        /* ============================================
+           TRACK DATA
+           ============================================ */
 
-        document.getElementById("trackId").textContent = data.track_id;
-        document.getElementById("trackKm").textContent = data.kilometer;
-        document.getElementById("roverStatus").textContent = "Active";
+        async function loadTrack() {
 
-    } catch (error) {
-        console.error("TRACK CONNECTION FAILED:", error);
-    }
-}
+            try {
+
+                const response =
+                    await fetch(BACKEND_URL + "/track");
+
+                if (!response.ok) {
+                    throw new Error("Track API error");
+                }
+
+                const data =
+                    await response.json();
+
+                document.getElementById("trackId").textContent =
+                    data.track_id;
+
+                document.getElementById("trackKm").textContent =
+                    data.kilometer;
+
+                document.getElementById("roverStatus").textContent =
+                    "Active";
+
+            } catch (error) {
+
+                console.error(
+                    "TRACK CONNECTION FAILED:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ============================================
+           ALERT DATA
+           ============================================ */
+
+        async function loadAlerts() {
+
+            try {
+
+                const response =
+                    await fetch(BACKEND_URL + "/alerts");
+
+                if (!response.ok) {
+                    throw new Error("Alerts API error");
+                }
+
+                const data =
+                    await response.json();
+
+                const alerts =
+                    document.querySelectorAll(".alert");
+
+                data.forEach((alert, index) => {
+
+                    if (alerts[index]) {
+
+                        alerts[index].className =
+                            "alert " +
+                            (
+                                alert.severity === "warning"
+                                    ? "warning"
+                                    : alert.severity === "danger"
+                                        ? "danger"
+                                        : ""
+                            );
+
+                        alerts[index]
+                            .querySelector(".alert-title")
+                            .textContent =
+                            alert.type;
+
+                        alerts[index]
+                            .querySelector(".alert-text")
+                            .textContent =
+                            alert.message;
+                    }
+
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "ALERT CONNECTION FAILED:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* ============================================
+           LOAD EVERYTHING
+           ============================================ */
+
         loadSensors();
         loadTrack();
+        loadAlerts();
 
 
-        /* REFRESH EVERY 5 SECONDS */
+        /* ============================================
+           REFRESH EVERY 5 SECONDS
+           ============================================ */
 
-        setInterval(
-            loadSensors,
-            5000
-        );
+        setInterval(() => {
+
+            loadSensors();
+            loadTrack();
+            loadAlerts();
+
+        }, 5000);
 
     </script>
 
