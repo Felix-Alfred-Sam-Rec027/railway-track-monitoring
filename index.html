@@ -467,9 +467,9 @@
                     <div class="pin"></div>
 
                     <div class="map-info">
-                        <b>TRACK-02</b><br>
-                        Kilometer: 125.4 KM<br>
-                        Rover: Active
+                        <b id="trackId">TRACK-02</b><br>
+Kilometer: <span id="trackKm">125.4</span> KM<br>
+Rover: <span id="roverStatus">Active</span>
                     </div>
 
                 </div>
@@ -778,8 +778,21 @@
 
 
         /* LOAD IMMEDIATELY */
+async function loadTrack() {
+    try {
+        const response = await fetch(BACKEND_URL + "/track");
+        const data = await response.json();
 
+        document.getElementById("trackId").textContent = data.track_id;
+        document.getElementById("trackKm").textContent = data.kilometer;
+        document.getElementById("roverStatus").textContent = "Active";
+
+    } catch (error) {
+        console.error("TRACK CONNECTION FAILED:", error);
+    }
+}
         loadSensors();
+        loadTrack();
 
 
         /* REFRESH EVERY 5 SECONDS */
