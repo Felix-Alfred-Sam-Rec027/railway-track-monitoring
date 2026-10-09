@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime, timezone
+import httpx
 
 app = FastAPI(
     title="Railway Track Monitoring API",
@@ -18,8 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Temporary in-memory storage for live sensor readings.
-# Data resets when the server restarts.
+# Render backend that receives readings from the ESP32
+RENDER_API_URL = "https://railway-track-monitoring-2.onrender.com"
+
+# Fallback in-memory storage for local sensor submissions
 latest_readings = {}
 
 
@@ -47,6 +50,7 @@ def health():
     return {"status": "healthy"}
 
 
+# Receive sensor data locally if needed
 @app.post("/sensor-data")
 def receive_sensor_data(reading: SensorReading):
     rail_id = reading.rail_id.upper()
@@ -66,23 +70,70 @@ def receive_sensor_data(reading: SensorReading):
     return {
         "status": "received",
         "rail_id": rail_id,
-        "message": "Sensor reading stored successfully"
+        "message": "Local sensor reading stored successfully"
     }
 
 
+# Retrieve the latest sensor readings from Render
 @app.get("/sensors")
 def get_sensors():
-    return latest_readings
+    try:
+        response = httpx.get(
+            f"{RENDER_API_URL}/sensors",
+            timeout=15.0
+        )
+        response.raise_for_status()
+        readings = response.json()
+
+        if isinstance(readings, dict) and readings:
+            return readings
+
+        return {
+            "status": "waiting",
+            "message": "No sensor readings have been received yet"
+        }
+
+    except httpx.HTTPError as exc:
+        return {
+            "status": "error",
+            "message": "Could not retrieve sensor data from Render",
+            "detail": str(exc)
+        }
 
 
+# Retrieve a specific rail's latest reading
 @app.get("/sensors/{rail_id}")
 def get_rail_sensors(rail_id: str):
     rail_id = rail_id.upper()
 
-    if rail_id not in latest_readings:
+    if rail_id not in ("RAIL1", "RAIL2"):
         return {
-            "status": "waiting",
-            "message": f"No data received yet for {rail_id}"
+            "status": "error",
+            "message": "rail_id must be RAIL1 or RAIL2"
         }
 
-    return latest_readings[rail_id]
+    try:
+        response = httpx.get(
+            f"{RENDER_API_URL}/sensors/{rail_id}",
+            timeout=15.0
+        )
+        response.raise_for_status()
+        reading = response.json()
+
+        if isinstance(reading, dict) and reading.get("status") == "waiting":
+            return reading
+
+        if isinstance(reading, dict) and reading.get("rail_id"):
+            return reading
+
+        return {
+            "status": "waiting",
+            "message": f"No reading available for {rail_id}"
+        }
+
+    except httpx.HTTPError as exc:
+        return {
+            "status": "error",
+            "message": f"Could not retrieve data for {rail_id} from Render",
+            "detail": str(exc)
+        }
